@@ -382,7 +382,7 @@ void injectTouchEvent(int down, int x, int y)
 {
     struct input_event ev;
     
-    fprintf(stderr, "x,y: %d,%d\n", x, y);
+    pr_vdebug(stderr, "x,y: %d,%d\n", x, y);
 
     // Calculate the final x and y
     x = xmin + (x * (xmax - xmin)) / (scrinfo.xres);
@@ -430,7 +430,7 @@ void injectTouchEvent(int down, int x, int y)
         pr_err("write event failed, %s\n", strerror(errno));
     }
 
-    /*pr_vdebug*/fprintf(stderr, "injectTouchEvent (x=%d, y=%d, down=%d)\n", x , y, down);
+    pr_vdebug("injectTouchEvent (x=%d, y=%d, down=%d)\n", x , y, down);
 }
 
 static void ptrevent(int buttonMask, int x, int y, rfbClientPtr cl)
@@ -444,7 +444,7 @@ by a press and release of button 4, and each step downwards is represented by
 a press and release of button 5. 
   From: http://www.vislab.usyd.edu.au/blogs/index.php/2009/05/22/an-headerless-indexed-protocol-for-input-1?blog=61 */
 	
-	/*pr_vdebug*/fprintf(stderr, "Got ptrevent: %04x (x=%d, y=%d)\n", buttonMask, x, y);
+	pr_vdebug("Got ptrevent: %04x (x=%d, y=%d)\n", buttonMask, x, y);
 	if(buttonMask & 1) {
 		// Simulate left mouse event as touch event
 		injectTouchEvent(1, x, y);
