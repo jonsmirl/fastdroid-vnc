@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Fastdroid-vnc HOWTO
 
 = Fastdroid VNC server for Android=
 
