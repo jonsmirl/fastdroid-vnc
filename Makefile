@@ -1,6 +1,6 @@
-LOCAL_PATH := $(call my-dir)
-include $(CLEAR_VARS)
+# Linux Makefile
 
+LOCAL_PATH := .
 LIB_VNC_ROOT := LibVNCServer-0.9.7
 LIB_VNC_SVR_PATH := $(LIB_VNC_ROOT)/libvncserver
 LIB_VNC_SVR_SRC := \
@@ -44,9 +44,27 @@ LOCAL_C_INCLUDES := \
 	external/zlib \
 	external/jpeg
 
-LOCAL_SHARED_LIBRARIES := libz
-LOCAL_STATIC_LIBRARIES := libjpeg
+LOCAL_SHARED_LIBRARIES := -lz -lpthread
+LIBJPEG_PATH := /usr/lib
+LOCAL_STATIC_LIBRARIES := $(LIBJPEG_PATH)/libjpeg.a 
 
 LOCAL_MODULE:= fastdroid-vnc
 
-include $(BUILD_EXECUTABLE)
+# build 
+
+GCC := gcc
+LD := gcc
+
+LOCAL_OBJ_FILES := $(subst .c,.o,$(LOCAL_SRC_FILES))
+C_INCLUDES := $(addprefix -I,$(LOCAL_C_INCLUDES))
+
+all: $(LOCAL_MODULE)
+
+$(LOCAL_MODULE): $(LOCAL_OBJ_FILES)
+	$(LD) -o $@ $(LOCAL_OBJ_FILES) $(C_LIBRARIES) $(LOCAL_STATIC_LIBRARIES) $(LOCAL_SHARED_LIBRARIES)
+
+$(LOCAL_OBJ_FILES): %.o:%.c
+	$(GCC) -c -o $@ $< $(C_INCLUDES)
+
+clean:
+	rm -rf $(LOCAL_OBJ_FILES) $(LOCAL_MODULE)

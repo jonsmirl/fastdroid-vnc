@@ -26,11 +26,11 @@ int main (int argc, char **argv)
 	if(!rfbProcessSizeArguments(&maxx,&maxy,&bpp,&argc,argv))
 	  return 1;
 	  
-        server = rfbGetScreen (&argc, argv, maxx, maxy, 8, 3, bpp);
+	server = rfbGetScreen (&argc, argv, maxx, maxy, 8, 3, bpp);
 	server->desktopName = "Zippy das wundersquirrel\'s VNC server";
 	server->frameBuffer = (char*)malloc(maxx*maxy*bpp);
 	server->alwaysShared = TRUE;
-        server->kbdAddEvent = on_key_press;
+	server->kbdAddEvent = on_key_press;
 	server->ptrAddEvent = on_mouse_event;
 
 	rfbInitServer (server);
