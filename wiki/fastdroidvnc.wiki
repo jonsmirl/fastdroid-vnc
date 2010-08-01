@@ -92,7 +92,7 @@ user can also specify the keyboard and touchpad devices by the command line:
 Information about the input devices and its name strings can be found in 
 `/proc/bus/input/devices`.
 
-==INPUT DRIVER (optional)==
+==FULL KEYBOARD INPUT DRIVER (optional)==
 
 If the device has a numeric keypad, the input device cannot be used by the
 VNC server to send alphabetic inputs to the Android framework. In this case, 
