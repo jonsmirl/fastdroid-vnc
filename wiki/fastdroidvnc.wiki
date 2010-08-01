@@ -19,7 +19,7 @@ Modified by Steve Guo (letsgoustc)
   * Supports Android framebuffer double buffering
   * Performance enhancement and fixes of GCC warnings in libvncserver-0.9.7
 
-==ANDROID QUICK INSTALL==
+==Android quick install==
 
   * Download the binary here: http://code.google.com/p/fastdroid-vnc/downloads/list
   * Use adb to push to android 
@@ -34,7 +34,20 @@ $ adb shell
 # ./fastdroid-vnc
 }}}
 
-==ANDROID BUILD==
+==How to get source==
+The latest source can be downloaded with subversion from the googlecode server.
+{{{
+svn checkout http://fastdroid-vnc.googlecode.com/svn/trunk/ fastdroid-vnc-read-only
+}}}
+
+Source tarball releases can be downloaded on the download page:
+http://code.google.com/p/fastdroid-vnc/downloads/list
+
+==How to contribute==
+Please post comments and issues on the "issues" page of this project. If you would like 
+to submit a change, welcome to join the project.
+
+==Android build==
 
 Copy the directory fastdroid-vnc to any Android build directory, run
 a build command from Android root
@@ -55,12 +68,12 @@ Modify file permission and run
   # ./fastdroid-vnc
 }}}
 
-==LINUX BUILD==
+==Linux build==
 
 This Android VNC server may also work on other Linux-based systems. An example
 Makefile is included, which should be able to build the binary with the make command.
 
-==INPUT SUPPORT==
+==Input support==
 
 This version of the fbvncserver can forward input events from the VNC client 
 to Android (based on Steve Guo's work). The way it works is converting remote 
@@ -92,14 +105,14 @@ user can also specify the keyboard and touchpad devices by the command line:
 Information about the input devices and its name strings can be found in 
 `/proc/bus/input/devices`.
 
-==FULL KEYBOARD INPUT DRIVER (optional)==
+==Full keyboard input driver (optional)==
 
 If the device has a numeric keypad, the input device cannot be used by the
 VNC server to send alphabetic inputs to the Android framework. In this case, 
 one can install the "vnckbd" driver included in this release. The instructions
 and source can be found in the kernel subdirectory.
 
-==VNC PERFORMANCE ENHANCEMENT==
+==VNC performance enhancement==
 
 This VNC server is based on libvncserver 0.9.7. Several optimizations
 are made upon the server to improve the response time to VNC clients, and 
