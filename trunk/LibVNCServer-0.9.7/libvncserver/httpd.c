@@ -305,7 +305,7 @@ httpProcessInput(rfbScreenInfoPtr rfbScreen)
 
     /* Process the request. */
     if(rfbScreen->httpEnableProxyConnect) {
-	const static char* PROXY_OK_STR = "HTTP/1.0 200 OK\r\nContent-Type: octet-stream\r\nPragma: no-cache\r\n\r\n";
+    static const char* PROXY_OK_STR = "HTTP/1.0 200 OK\r\nContent-Type: octet-stream\r\nPragma: no-cache\r\n\r\n";
 	if(!strncmp(buf, "CONNECT ", 8)) {
 	    if(atoi(strchr(buf, ':')+1)!=rfbScreen->port) {
 		rfbErr("httpd: CONNECT format invalid.\n");
@@ -547,7 +547,7 @@ parseParams(const char *request, char *result, int max_bytes)
 	    strcpy(param_request, tail);
 	} else {
 	    len = delim_ptr - tail;
-	    if (len >= sizeof(param_request)) {
+	    if (len >= (int) sizeof(param_request)) {
 		return FALSE;
 	    }
 	    memcpy(param_request, tail, len);
