@@ -226,12 +226,21 @@ static void init_touch()
     }
     xmin = info.minimum;
     xmax = info.maximum;
+    if (xmax)
+    	pr_vdebug("touchscreen xmin=%d xmax=%d\n", xmin, xmax);
+    else
+    	pr_vdebug("touchscreen has no xmax: using emulator mode\n");
+
     if(ioctl(touchfd, EVIOCGABS(ABS_Y), &info)) {
         pr_err("cannot get ABS_Y, %s\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
     ymin = info.minimum;
     ymax = info.maximum;
+    if (ymax)
+    	pr_vdebug("touchscreen ymin=%d ymax=%d\n", ymin, ymax);
+    else
+    	pr_vdebug("touchscreen has no ymax: using emulator mode\n");
 }
 
 static void cleanup_touch()
@@ -381,12 +390,10 @@ static void keyevent(rfbBool down, rfbKeySym key, rfbClientPtr cl)
 void injectTouchEvent(int down, int x, int y)
 {
     struct input_event ev;
-    
-    pr_vdebug(stderr, "x,y: %d,%d\n", x, y);
 
-    // Calculate the final x and y
-    x = xmin + (x * (xmax - xmin)) / (scrinfo.xres);
-    y = ymin + (y * (ymax - ymin)) / (scrinfo.yres);
+    // Re-calculate the final x and y if xmax/ymax are specified
+    if (xmax) x = xmin + (x * (xmax - xmin)) / (scrinfo.xres);
+    if (ymax) y = ymin + (y * (ymax - ymin)) / (scrinfo.yres);
     
     memset(&ev, 0, sizeof(ev));
 
@@ -532,7 +539,7 @@ static void update_screen(void)
 		if (varblock.max_y < 0)
 			varblock.max_y = varblock.min_y;
 
-		pr_vdebug(stderr, "Changed frame: %dx%d @ (%d,%d)...\n",
+		pr_vdebug("Changed frame: %dx%d @ (%d,%d)...\n",
 		  (varblock.max_x + 2) - varblock.min_x,
 		  (varblock.max_y + 1) - varblock.min_y,
 		  varblock.min_x, varblock.min_y);
